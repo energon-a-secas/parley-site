@@ -1,0 +1,18 @@
+flowchart LR
+  subgraph Catalog["index.html"]
+    F[Filters and URL state] --> R[render.js cards]
+    R --> D[Detail dialog]
+  end
+  subgraph Patterns["js/patterns/*.js"]
+    T[tokens.js] --- P[one module per pattern<br/>record + html + css + mount]
+    I[index.js registry] --> P
+  end
+  I --> S[state.js loadItems]
+  S --> R
+  P --> M[demos.js mountPreview]
+  M --> R
+  M --> D
+  M --> V[preview.html]
+  P --> E[export.js]
+  E -->|agent brief, single file, catalog| C[(clipboard / download)]
+  P --> L[llms.txt points agents here]

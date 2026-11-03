@@ -1,0 +1,23 @@
+# Parley
+
+> A catalog of chat and assistant UI patterns observed in shipping products (ChatGPT, Claude, Gemini, Perplexity, Copilot, Cursor, Intercom and others), each with a build spec, dated evidence, pitfalls, a live demo and original reference code in plain HTML, CSS and JS.
+
+Use this site to pick a pattern and hand it to a coding agent instead of reinventing a chat composer, a streaming message, a reasoning disclosure or a tool-call card.
+
+## How to read it as an agent
+
+- Catalog page: https://parley.neorgon.com/ (filter with ?q=, ?cat=, open a pattern with ?p=<id>)
+- One pattern's reference code: https://parley.neorgon.com/js/patterns/<id>.js
+  An ES module whose default export has: id, name, category, description, tags, added, seenIn[], anatomy[], states[], behavior[], microcopy[], variants[], pitfalls[], refs[], spec, html, css, and an optional mount(root) function.
+- Shared tokens every snippet relies on: https://parley.neorgon.com/js/patterns/tokens.js (the `.pl` block; include it once per page, override --pl-accent to brand it)
+- Registry of all ids in catalog order: https://parley.neorgon.com/js/patterns/index.js
+- Categories: https://parley.neorgon.com/js/patterns/categories.js
+- Live demo of one pattern, full size: https://parley.neorgon.com/preview.html?p=<id> (add &theme=light)
+- Authoring contract for new patterns: https://parley.neorgon.com/js/patterns/CONTRACT.md
+
+## Conventions in the code
+
+- Every snippet's root element carries `class="pl pl-<id>"`; all its CSS is scoped under `.pl-<id>`.
+- The copyable JS is `(mount.toString())(document.querySelector('.pl-<id>'))`: mount references nothing outside itself.
+- Colors and type come only from `--pl-*` custom properties, so a snippet drops into any page without a framework.
+- Observations are dated. A `seenIn.checked` date says when the product looked like that.

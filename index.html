@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Strict CSP. An inline script runs only if its sha256 is listed: the one hash is the theme
+       guard further down, so editing that script means re-hashing it (smoke check 29 reports a
+       mismatch). Inline on*="" handlers never run; attach listeners from a script file. Add a
+       source only when the page loads from it, as an exact host or a pinned path, never a whole
+       package CDN: a Convex deployment adds its https and wss URLs to connect-src, and sign-in
+       adds the CSP table in packages/neorgon-ui/auth/README.md. frame-ancestors, report-uri and
+       sandbox are ignored in a meta tag, so they are left out. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-na6phygP/tfoCIp4oBeQgGJJpQsZob/udrLum+20QTI=' https://gc.zgo.at https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://cdn.neorgon.org/v1.0.0/; img-src 'self' data: https://neorgon.goatcounter.com; font-src 'self'; connect-src 'self' https://neorgon.goatcounter.com https://cloudflareinsights.com; manifest-src 'self'; frame-src 'none'; worker-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Parley">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="neo-mark" content="on">
+  <title>Parley | Chat UI Patterns</title>
+  <meta name="description" content="Browse chat and assistant UI patterns taken from real products, each with anatomy, states, a copyable snippet and an agent-ready spec">
+  <meta property="og:title" content="Parley | Chat UI Patterns">
+  <meta property="og:description" content="Browse chat and assistant UI patterns taken from real products, each with anatomy, states, a copyable snippet and an agent-ready spec">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://parley.neorgon.com/">
+  <meta property="og:site_name" content="Neorgon">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Parley | Chat UI Patterns">
+  <meta name="twitter:description" content="Browse chat and assistant UI patterns taken from real products, each with anatomy, states, a copyable snippet and an agent-ready spec">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://parley.neorgon.com/">
+  <meta property="og:locale" content="en_US">
+  <meta name="theme-color" content="#040714">
+  <meta property="og:image" content="https://parley.neorgon.com/og-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Parley">
+  <meta name="twitter:image" content="https://parley.neorgon.com/og-preview.jpg">
+  <!-- Fleet design tokens: canonical, do not redeclare locally (docs/references/new-project-context.md, Design) -->
+  <link rel="stylesheet" href="https://cdn.neorgon.org/v1.0.0/styles/base.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- template:styles -->
+<link rel="stylesheet" href="css/collection.css">
+<link rel="stylesheet" href="css/parley.css">
+  <!-- /template:styles -->
+  <!-- Neorgon Header Kit (vendored; ?header=live swaps CSS to CDN). Keep after style.css, the kit owns the header. -->
+  <script>(function(){var m=location.search.match(/[?&]theme=([\w-]+)/)||document.cookie.match(/(?:^|;\s*)neo_theme=([\w-]+)/);if(m&&m[1]!=='default')document.documentElement.dataset.theme=decodeURIComponent(m[1]);})();</script>
+  <link rel="stylesheet" href="css/neorgon-header.css">
+  <link rel="stylesheet" href="css/neorgon-themes.css">
+  <link rel="stylesheet" href="https://cdn.neorgon.org/v1.0.0/header/season.css">
+  <script defer src="js/neorgon-header.js"></script>
+  <!-- Neorgon Footer Kit (vendored). Pins the footer to the viewport floor on short
+       pages and builds the meta bar + back-to-top. See packages/neorgon-ui/footer/README.md.
+       Optional stamps: <meta name="neo-repo"|"neo-version"|"neo-updated"> -->
+  <link rel="stylesheet" href="css/neorgon-footer.css">
+  <script defer src="js/neorgon-footer.js"></script>
+  <!-- Neorgon Beacon Kit (vendored). Report-an-issue ladybug in the footer bar: it
+       carries page context to balise.neorgon.com in a URL fragment and the
+       visitor writes there. No form on this page and no request from it.
+       Opt out per page with <meta name="beacon" content="off">.
+       See packages/neorgon-ui/beacon/README.md. -->
+  <meta name="beacon-site" content="parley-site">
+  <link rel="stylesheet" href="css/neorgon-beacon.css">
+  <script defer src="js/neorgon-beacon.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Parley",
+    "description": "Browse chat and assistant UI patterns taken from real products, each with anatomy, states, a copyable snippet and an agent-ready spec",
+    "url": "https://parley.neorgon.com/",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Organization", "name": "Neorgon", "url": "https://neorgon.com/" }
+  }
+  </script>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Neorgon Header Kit contract (packages/neorgon-ui/header/README.md).
+       data-header-mode: hub (glass) | content (sticky gradient) | app (slim, auto-hides on scroll).
+       Pick content for learning/content sites, app for tool-dense sites. -->
+  <header class="header-bar" data-header-mode="app">
+    <div class="header-logo">
+      <!-- PATTERN: one link: mark + name go to THIS site's home (root or #home)
+           so clicking either resets the view. The hub icon in .header-right
+           is the only header link to neorgon.com. -->
+      <a href="./" class="header-title-link">
+        <img src="energon-classic-logo.png" class="header-logo-img" alt="">
+        <div class="header-title-wrap">
+          <h1>Parley</h1>
+          <div class="header-subtitle">Chat UI patterns from real products, ready to copy</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- .header-right owns margin-left:auto; home icon is always last. -->
+    <div class="header-right">
+      <!-- template:actions -->
+<div class="header-actions">
+  <button type="button" class="btn btn--ghost btn--sm" id="copyCatalog" data-keep-mobile>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6l2 2h4v14H3V5h4z"/><path d="M8 12h8M8 16h5"/></svg>
+    <span>Catalog for agents</span>
+  </button>
+  <button type="button" class="btn btn--ghost btn--sm" id="shareView">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l2-2"/></svg>
+    <span>Share view</span>
+  </button>
+</div>
+  <!-- /template:actions -->
+
+      <!-- Accounts (only for a site with sign-in): the Neorgon Auth Kit renders a "Sign in"
+           button in this slot, and Clerk's avatar menu once signed in. It also owns the
+           sign-in dialog, so there is no panel or modal to write. Vendor it with
+           packages/neorgon-ui/sync-auth.sh (its header shows how to adopt one site), then add
+             <meta name="clerk-publishable-key" content="pk_live_...">
+             a stylesheet link to css/neorgon-auth.css (named in prose here, because the
+             smoke ref checker reads comments and this file does not exist until you vendor it)
+           to <head>, and in js/events.js:
+             import { NeoAuth } from './neorgon-auth.js';
+             NeoAuth.onChange(({ signedIn, label }) => ...); NeoAuth.start({ convex });
+           Contract, CSP and gated actions: packages/neorgon-ui/auth/README.md
+      <div class="neo-auth" data-neo-auth data-keep-mobile hidden></div>
+      -->
+
+      <a class="header-home" href="https://neorgon.com/" title="neorgon.com" aria-label="Neorgon home">
+        <svg class="nh-hub-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 4.4 18.58 8.2 18.58 15.8 12 19.6 5.42 15.8 5.42 8.2Z" fill="currentColor" stroke="none"/>
+          <g class="nh-orbit">
+            <path d="M2.47 17.50 A11.0 11.0 0 0 1 14.85 1.37" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round"/>
+            <path d="M21.53 6.50 A11.0 11.0 0 0 1 9.15 22.63" fill="none" stroke="currentColor" stroke-width="1.05" stroke-linecap="round"/>
+            <circle cx="21.71" cy="6.84" r="1.25" fill="currentColor"/>
+            <circle cx="2.29" cy="17.16" r="1.25" fill="currentColor"/>
+          </g>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- template:main -->
+<main id="main" tabindex="-1">
+  <div class="container collection stack">
+    <section class="section" aria-labelledby="collectionTitle">
+      <div class="section__titles collection__intro">
+        <p class="eyebrow">UI LAB · CHAT PATTERNS</p>
+        <h2 id="collectionTitle" class="collection__title">Chat interfaces, taken apart and ready to reuse.</h2>
+        <p class="section__lead">Every pattern here was observed in a shipping chat or assistant product. Open one for its anatomy, states and pitfalls, a live demo, and a snippet you can paste into a page or hand to an agent.</p>
+        <p class="intro__how"><span>Copy as <code>HTML</code>, <code>CSS</code>, <code>JS</code> or one file</span><span>Agent brief in Markdown per pattern</span><span>Machine-readable: <a href="llms.txt">llms.txt</a></span></p>
+      </div>
+
+      <form id="collectionFilters" class="collection__filters" role="search" aria-label="Search patterns">
+        <div class="field collection__search">
+          <label for="searchInput">Search patterns</label>
+          <input type="search" class="input" id="searchInput" name="q" placeholder="Names, parts, or a product like Perplexity" maxlength="200" autocomplete="off" enterkeyhint="search">
+        </div>
+        <div class="field">
+          <label for="categorySelect">Category</label>
+          <select class="select" id="categorySelect" name="cat"><option value="all">All categories</option></select>
+        </div>
+        <button type="button" class="btn btn--ghost" id="clearFilters" disabled>Clear filters</button>
+      </form>
+
+      <div class="collection__meta">
+        <p id="resultCount" class="result-count" role="status" aria-live="polite" aria-atomic="true">Loading patterns…</p>
+        <div class="collection__controls">
+          <div class="field collection__sort">
+            <label for="sortSelect">Sort</label>
+            <select class="select" id="sortSelect"><option value="curated">By category</option><option value="name">Name, A to Z</option><option value="newest">Newest first</option></select>
+          </div>
+          <div class="view-switch" role="group" aria-label="Catalog layout">
+            <button type="button" class="btn btn--ghost" data-view="grid" aria-pressed="true">Grid</button>
+            <button type="button" class="btn btn--ghost" data-view="list" aria-pressed="false">List</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="collectionError" class="collection__notice" hidden>
+        <p id="collectionErrorText" role="alert">Could not load the pattern modules. Reload the page, or check the console if you are editing a pattern.</p>
+        <button type="button" class="btn btn--secondary" id="retryCollection">Try again</button>
+      </div>
+      <section id="collectionResults" aria-label="Patterns" aria-busy="true">
+        <div id="collectionLoading" class="collection__skeletons" aria-hidden="true">
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+        <ul id="itemList" class="collection__items" data-view="grid" hidden></ul>
+        <div id="collectionEmpty" class="status-panel" hidden>
+          <h3 id="emptyTitle">No patterns yet</h3>
+          <p id="emptyDescription">New patterns will appear here.</p>
+          <button type="button" class="btn btn--secondary" id="emptyReset" hidden>Clear filters</button>
+        </div>
+      </section>
+      <p class="collection__sample-note">Observations name the product and the date they were checked. Products change; the pattern record is what was true that day. Snippets are original code, not copies.</p>
+    </section>
+    <noscript><p class="status-panel">Enable JavaScript to browse the patterns and run the demos.</p></noscript>
+  </div>
+</main>
+
+<dialog class="dialog dialog--pattern" id="itemDialog" aria-labelledby="itemDialogTitle" aria-describedby="itemDialogDescription">
+  <div class="dialog__header">
+    <div class="dialog__titles">
+      <p id="itemDialogCategory" class="eyebrow"></p>
+      <h2 id="itemDialogTitle">Pattern</h2>
+    </div>
+    <button type="button" class="btn btn--ghost" data-dialog-close autofocus>Close</button>
+  </div>
+  <div class="dialog__body">
+    <div class="detail__stage">
+      <p id="itemDialogDescription" class="section__lead"></p>
+      <div class="detail__toolbar">
+        <div class="segment" role="group" aria-label="Demo theme">
+          <button type="button" class="btn btn--ghost btn--sm" data-preview-theme="dark" aria-pressed="true">Dark</button>
+          <button type="button" class="btn btn--ghost btn--sm" data-preview-theme="light" aria-pressed="false">Light</button>
+        </div>
+        <button type="button" class="btn btn--ghost btn--sm" id="restartDemo">Restart demo</button>
+        <span class="spacer"></span>
+        <a class="btn btn--ghost btn--sm" id="previewStandalone" href="preview.html" target="_blank" rel="noopener">Open full size</a>
+      </div>
+      <div id="detailPreview" class="detail__preview" aria-label="Live demo"></div>
+      <div class="code-pane">
+        <div class="code-tabs" role="tablist" aria-label="Snippet code">
+          <button type="button" role="tab" data-code-tab="html" aria-selected="true" id="codeTabHtml">HTML</button>
+          <button type="button" role="tab" data-code-tab="css" aria-selected="false" id="codeTabCss">CSS</button>
+          <button type="button" role="tab" data-code-tab="js" aria-selected="false" id="codeTabJs">JS</button>
+        </div>
+        <pre tabindex="0" role="tabpanel" aria-label="Snippet source"><code id="detailCode"></code></pre>
+        <button type="button" class="btn btn--secondary btn--sm" id="copyCode">Copy HTML</button>
+      </div>
+      <div class="detail__exports">
+        <button type="button" class="btn btn--primary btn--sm" id="copyAgent">Copy agent brief</button>
+        <button type="button" class="btn btn--secondary btn--sm" id="copySingle">Copy single file</button>
+        <button type="button" class="btn btn--ghost btn--sm" id="downloadSingle">Download .html</button>
+      </div>
+    </div>
+    <aside class="detail__facts" aria-label="Pattern facts">
+      <section><h3>Build spec</h3><p id="detailSpec" class="detail__spec"></p></section>
+      <section><h3>Seen in</h3><ul id="detailSeen" class="detail__seen"></ul></section>
+      <section><h3>Anatomy</h3><ul id="detailAnatomy"></ul></section>
+      <section><h3>States</h3><ul id="detailStates"></ul></section>
+      <section><h3>Behavior and accessibility</h3><ul id="detailBehavior"></ul></section>
+      <section id="detailMicrocopyBlock"><h3>Microcopy</h3><ul id="detailMicrocopy" class="detail__micro"></ul></section>
+      <section id="detailVariantsBlock"><h3>Variants</h3><ul id="detailVariants"></ul></section>
+      <section><h3>Pitfalls</h3><ul id="detailPitfalls" class="detail__pitfalls"></ul></section>
+      <section id="detailRefsBlock"><h3>References</h3><ul id="detailRefs"></ul></section>
+      <section><h3>Tags</h3><ul id="detailTags" class="detail__tags"></ul></section>
+    </aside>
+  </div>
+</dialog>
+  <!-- /template:main -->
+
+  <!-- Neorgon Footer Kit contract. data-footer-mode: minimal (default) | content | app.
+       Replace the copy with a real note (privacy, data provenance, disclaimer) or drop
+       the text entirely, the kit appends "Part of Neorgon" and any version stamps. -->
+  <footer class="neo-footer" data-footer-mode="minimal">
+    <p>Patterns are observations of public products, dated; snippets are original code under MIT.</p>
+  </footer>
+
+  <div id="app-toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
