@@ -55,8 +55,13 @@ export function render() {
   $('collectionError').hidden = state.status !== 'error';
 
   const items = selectItems(state.items, state);
-  const count = `${items.length} of ${state.items.length} ${state.items.length === 1 ? 'pattern' : 'patterns'}`;
-  $('resultCount').textContent = !state.loaded ? (loading ? 'Loading patterns…' : 'Catalog unavailable') : count;
+  const noun = state.items.length === 1 ? 'pattern' : 'patterns';
+  // The count shows only while a filter narrows the list. At rest every pattern is on the
+  // page, so the total stays visually hidden and is still announced after Clear filters.
+  const count = filtered ? `${items.length} of ${state.items.length} ${noun}` : `${state.items.length} ${noun}`;
+  const resultCount = $('resultCount');
+  resultCount.textContent = !state.loaded ? (loading ? 'Loading patterns…' : 'Catalog unavailable') : count;
+  resultCount.classList.toggle('sr-only', state.loaded && !filtered);
 
   const list = $('itemList');
   list.hidden = !state.loaded || !items.length;

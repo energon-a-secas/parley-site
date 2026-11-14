@@ -1,6 +1,8 @@
 /* Parley: pattern cards, the detail dialog and code panes. Kit chrome stays in the kits. */
 .collection { max-width: 1280px; }
-.collection__title { max-width: 24ch; }
+/* The result count is visually hidden at rest (every pattern is on the page), so the sort and
+   layout controls keep the right edge on their own. */
+.collection__controls { margin-left: auto; }
 .collection__items { grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
 
 .pattern-card { height: 100%; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-1); transition: border-color 160ms var(--ease-out), transform 160ms var(--ease-out); }
@@ -72,9 +74,6 @@ dialog.dialog--pattern { width: min(1180px, calc(100vw - 32px)); max-width: none
 .detail__tags li { padding: 2px 8px; border: 1px solid var(--border); border-radius: 999px; font-size: var(--text-xs); }
 .detail__tags li::before { display: none; }
 .detail__tags li { padding-left: 8px; }
-.intro__how { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); font-size: var(--text-sm); color: var(--text-secondary); }
-.intro__how span { display: inline-flex; align-items: center; gap: 6px; }
-.intro__how kbd, .intro__how code { font-family: var(--font-mono, ui-monospace, Menlo, monospace); font-size: 12px; padding: 1px 6px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface-1); }
 
 @media (max-width: 900px) {
   .dialog--pattern .dialog__body { grid-template-columns: 1fr; }
