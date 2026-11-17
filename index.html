@@ -61,6 +61,7 @@
        Opt out per page with <meta name="beacon" content="off">.
        See packages/neorgon-ui/beacon/README.md. -->
   <meta name="beacon-site" content="parley-site">
+  <meta name="neo-category" content="ui-lab">
   <link rel="stylesheet" href="css/neorgon-beacon.css">
   <script defer src="js/neorgon-beacon.js"></script>
   <script type="application/ld+json">
@@ -251,6 +252,18 @@
        the text entirely, the kit appends "Part of Neorgon" and any version stamps. -->
   <footer class="neo-footer" data-footer-mode="minimal">
     <p>Patterns are observations of public products, dated; snippets are original code under MIT.</p>
+    <!-- neo-fleet:more -->
+    <nav class="neo-more" aria-label="More in UI Lab" data-category="ui-lab" data-label-en="UI Lab" data-label-es="UI Lab">
+      <span class="neo-more__label" aria-hidden="true"><svg class="neo-more__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4.5" width="13" height="7" rx="3.5"/><circle cx="12.5" cy="8" r="1.6" fill="currentColor" stroke="none"/><path d="M3 17.5h3.7M11.3 17.5H21"/><circle cx="9" cy="17.5" r="2.3"/></svg><span class="neo-more__title">More in UI Lab</span></span>
+      <ul class="neo-more__list">
+        <li><a href="https://uianatomy.neorgon.com/">UI Anatomy</a></li>
+        <li><a href="https://neokeys.neorgon.com/">NeoKeys</a></li>
+        <li><a href="https://questline.neorgon.com/">Questline</a></li>
+        <li><a href="https://sortie.neorgon.com/">Sortie</a></li>
+        <li><a class="neo-more__all" href="https://neorgon.com/ui-lab/">All UI Lab tools</a></li>
+      </ul>
+    </nav>
+    <!-- /neo-fleet:more -->
   </footer>
 
   <div id="app-toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
